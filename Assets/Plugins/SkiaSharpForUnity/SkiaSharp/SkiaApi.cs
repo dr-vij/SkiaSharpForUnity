@@ -6,8 +6,10 @@ namespace SkiaSharp
 	{
 #if __IOS__ || __TVOS__ || __WATCHOS__
 		private const string SKIA = "@rpath/libSkiaSharp.framework/libSkiaSharp";
+#elif UNITY_WEBGL && !UNITY_EDITOR
+		private const string SKIA = "__Internal";
 #else
-		private const string SKIA = "__Internal";// "WebGL/libSkiaSharp"; // "__Internal"; 
+		private const string SKIA = "libSkiaSharp";
 #endif
 
 #if USE_DELEGATES

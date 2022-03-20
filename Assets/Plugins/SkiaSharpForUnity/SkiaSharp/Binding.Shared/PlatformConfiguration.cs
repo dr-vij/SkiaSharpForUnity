@@ -37,13 +37,21 @@ namespace SkiaSharp
 			var arch = Package.Current.Id.Architecture;
 			const ProcessorArchitecture arm64 = (ProcessorArchitecture)12;
 			IsArm = arch == ProcessorArchitecture.Arm || arch == arm64;
-#else
-			IsMac = true;		// RuntimeInformation.IsOSPlatform (OSPlatform.OSX);
-			IsLinux = false;	// RuntimeInformation.IsOSPlatform (OSPlatform.Linux);
+#elif UNITY_WEBGL && !UNITY_EDITOR
+			IsMac = false;
+			IsLinux = true;
 			IsUnix = IsMac || IsLinux;
-			IsWindows = false; // RuntimeInformation.IsOSPlatform (OSPlatform.Windows);
+			IsWindows = false;
 
-			var arch = Architecture.X64; // RuntimeInformation.ProcessArchitecture;
+			var arch = Architecture.X64;
+			IsArm = arch == Architecture.Arm || arch == Architecture.Arm64;
+#else
+			IsMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+			IsLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+			IsUnix = IsMac || IsLinux;
+			IsWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+			var arch = RuntimeInformation.ProcessArchitecture;
 			IsArm = arch == Architecture.Arm || arch == Architecture.Arm64;
 #endif
 
