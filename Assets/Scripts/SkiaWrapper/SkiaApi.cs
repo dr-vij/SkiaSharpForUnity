@@ -2,8 +2,8 @@
 
 namespace SkiaSharp
 {
-    internal partial class SkiaApi
-    {
+	internal partial class SkiaApi
+	{
 #if __IOS__ || __TVOS__ || __WATCHOS__
 		private const string SKIA = "@rpath/libSkiaSharp.framework/libSkiaSharp";
 #else
@@ -17,5 +17,5 @@ namespace SkiaSharp
 		private static T GetSymbol<T> (string name) where T : Delegate =>
 			LibraryLoader.GetSymbolDelegate<T> (libSkiaSharpHandle.Value, name);
 #endif
-    }
+	}
 }

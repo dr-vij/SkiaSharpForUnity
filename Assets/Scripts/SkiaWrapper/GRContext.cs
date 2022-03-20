@@ -115,10 +115,10 @@ namespace SkiaSharp
 			var queue = backendContext.Queue;
 
 			if (options == null) {
-				return GetObject (SkiaApi.gr_direct_context_make_metal ((void*)device.Handle, (void*)queue.Handle));
+				return GetObject (SkiaApi.gr_direct_context_make_metal ((void*)(IntPtr)device.Handle, (void*)(IntPtr)queue.Handle));
 			} else {
 				var opts = options.ToNative ();
-				return GetObject (SkiaApi.gr_direct_context_make_metal_with_options ((void*)device.Handle, (void*)queue.Handle, &opts));
+				return GetObject (SkiaApi.gr_direct_context_make_metal_with_options ((void*)(IntPtr)device.Handle, (void*)(IntPtr)queue.Handle, &opts));
 			}
 		}
 
@@ -210,7 +210,7 @@ namespace SkiaSharp
 		public void PurgeUnlockedResources (long bytesToPurge, bool preferScratchResources) =>
 			SkiaApi.gr_direct_context_purge_unlocked_resources_bytes (Handle, (IntPtr)bytesToPurge, preferScratchResources);
 
-		internal static new GRContext GetObject (IntPtr handle, bool owns = true) =>
+		internal static GRContext GetObject (IntPtr handle, bool owns = true) =>
 			GetOrAddObject (handle, owns, (h, o) => new GRContext (h, o));
 	}
 }
