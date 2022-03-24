@@ -328,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTestCubeRenderer: {fileID: 960669066}
+  mFontAsset: {fileID: 4900000, guid: cfe52fc071bbb4cbb9e439252995c860, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

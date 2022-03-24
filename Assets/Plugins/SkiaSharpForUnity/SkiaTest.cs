@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using SkiaSharp;
+using System.IO;
 
 #if UNITY_EDITOR
 
@@ -20,14 +21,17 @@ static class UsefulShortcuts
 
 public class SkiaTest : MonoBehaviour
 {
-    [SerializeField] private Renderer mTestCubeRenderer;
+    [SerializeField] private Renderer mTestCubeRenderer = default;
+    [SerializeField] private TextAsset mFontAsset = default;
 
     private void Start()
     {
-
         Debug.LogWarning("Test start");
 
-        var skImageInfo = new SKImageInfo(64, 64, SKColorType.Rgba8888);
+        var w = 128;
+        var h = 128;
+
+        var skImageInfo = new SKImageInfo(w, h, SKColorType.Rgba8888);
 
         var bitmap = new SKBitmap(skImageInfo);
         Debug.LogWarning("bitmap was created");
@@ -42,15 +46,28 @@ public class SkiaTest : MonoBehaviour
         Debug.LogWarning("skCanvas was cleared");
 
         var paint = new SKPaint();
-        paint.Color = SKColors.Black;
+        paint.Color = SKColors.White;
         paint.StrokeWidth = 1;
-        skCanvas.DrawCircle(32, 32, 16, paint);
+        skCanvas.DrawCircle(w / 2, h / 2, w / 2, paint);
         Debug.LogWarning("circle was drawn");
+
+        var bytes = mFontAsset.bytes;
+        var stream = new MemoryStream(bytes);
+        stream.Flush();
+        var typeFace = SKTypeface.FromStream(stream);
+        Debug.LogWarning("Font loaded");
+
+        paint.Typeface = typeFace;
+        paint.TextSize = 24;
+        paint.TextAlign = SKTextAlign.Center;
+        paint.Color = SKColors.Black;
+        skCanvas.DrawText("TEXT", w / 2, h / 2, paint);
+        Debug.LogWarning("Text printed");
 
         skCanvas.Flush();
         Debug.LogWarning("skCanvas was Flushed");
 
-        var texture = new Texture2D(64, 64, TextureFormat.RGBA32, false);
+        var texture = new Texture2D(w, h, TextureFormat.RGBA32, false);
         texture.LoadRawTextureData(bitmap.Bytes);
         Debug.LogWarning("bitmap was loaded to unity texture");
 
