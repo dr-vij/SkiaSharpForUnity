@@ -55,7 +55,7 @@ public class SkiaTest : MonoBehaviour
         var stream = new MemoryStream(bytes);
         stream.Flush();
         var typeFace = SKTypeface.FromStream(stream);
-        Debug.LogWarning("Font loaded");
+        Debug.LogWarning($"Font loaded, glyphcount: {typeFace.GlyphCount}");
 
         paint.Typeface = typeFace;
         paint.TextSize = 24;
