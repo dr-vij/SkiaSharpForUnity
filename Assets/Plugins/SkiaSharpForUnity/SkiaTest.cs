@@ -24,11 +24,13 @@ public class SkiaTest : MonoBehaviour
     [SerializeField] private Renderer mTestCubeRenderer = default;
     [SerializeField] private TextAsset mFontAsset = default;
 
+#if UNITY_EDITOR
     [MenuItem("MyMenu/InitEmscripten")]
     public static void InitEmscriptenArgs()
     {
         PlayerSettings.WebGL.emscriptenArgs = "-s WARN_ON_UNDEFINED_SYMBOLS=0";
     }
+#endif
 
     private void Start()
     {
